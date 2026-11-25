@@ -66,10 +66,13 @@ fig2 = px.bar(filtered, x='Diff', y='Country', orientation='h',
               template='plotly_white', title='Countries above (blue) and below (red) the global average')
 
 fig2.add_vline(x=0, line_dash='dash')
-fig2.add_annotation(x=0, y=1, yref='paper', showarrow=False,
-                    text=f'Global average = {global_avg:.2f}')
+fig2.add_annotation(x=0, y=1, yref='paper', yanchor='bottom', yshift=5,   # label sits ABOVE the bars
+                    showarrow=False, text=f'Global average = {global_avg:.2f}')
 
-st.plotly_chart(fig2, width='stretch', height=800)
+fig2.update_layout(margin=dict(t=80),                  
+                   height=max(400, 20 * len(filtered)),    
+                   yaxis=dict(dtick=1))                    
+st.plotly_chart(fig2, width='stretch')
 
 st.divider()
 st.caption("Built with Streamlit + Plotly")
